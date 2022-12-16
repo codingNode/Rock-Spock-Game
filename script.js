@@ -1,3 +1,5 @@
+import { startConfetti, stopConfetti, removeConfetti } from "./confetti.js";
+
 const playerChoice = document.getElementById('playerChoice');
 const playerScore  = document.getElementById('playerScore');
 const playerSelection = document.querySelectorAll('.player-container i');
@@ -77,6 +79,7 @@ function updateScore(pChoice)
 
     if(choicesCheck.defeats.indexOf(computerSelectedItem) === -1)
     {
+      
       resultText.textContent = "You Lost!";
       resultText.style.color = 'red';
       computerScoreNum++;
@@ -85,6 +88,7 @@ function updateScore(pChoice)
     }
     else
     {
+      startConfetti()
       resultText.textContent = "Hurrah, You Win!";
       resultText.style.color = 'green';
       playerScoreNum++;
@@ -101,6 +105,8 @@ function checkResult(pChoice)
 
 function select(choice)
 {
+      stopConfetti();
+      removeConfetti();
   
     playerSelection.forEach((item,i)=>{
   
@@ -118,4 +124,8 @@ function select(choice)
   checkResult(choice)
 }
 
-resetAll()
+window.select = select;
+window.resetAll = resetAll;
+
+
+resetAll();
