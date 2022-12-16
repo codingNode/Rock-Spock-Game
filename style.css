@@ -67,7 +67,19 @@ h2 {
   color: rgb(255, 30, 49);
 }
 
-
+#playerScore
+{
+  
+  background: dodgerblue;
+  color: white;
+  border-radius: 6px;
+}
+#computerScore
+{
+  color: white;
+  background: rgb(255, 30, 49);
+  border-radius: 6px;
+}
 .reset-icon {
   font-size: 30px;
   cursor: pointer;

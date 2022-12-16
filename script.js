@@ -3,21 +3,42 @@ const playerScore  = document.getElementById('playerScore');
 const playerSelection = document.querySelectorAll('.player-container i');
 const computerSelections = document.querySelectorAll('.computer-container i');
 const computerChoiceText = document.getElementById('computerChoice');
+const computerScore  = document.getElementById('computerScore');
+const resultText = document.getElementById('resultText')
 
-
-// console.log(playerSelection[0].title);
-// playerSelection[0].style.color = 'dodgerblue'
 
 const choices = {
-  rock: { name: 'Rock', defeats: ['scissors', 'lizard'] },
-  paper: { name: 'Paper', defeats: ['rock', 'spock'] },
-  scissors: { name: 'Scissors', defeats: ['paper', 'lizard'] },
-  lizard: { name: 'Lizard', defeats: ['paper', 'spock'] },
-  spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
+  rock: { name: 'Rock', defeats: ['Scissors', 'Lizard'] },
+  paper: { name: 'Paper', defeats: ['Rock', 'Spock'] },
+  scissors: { name: 'Scissors', defeats: ['Paper', 'Lizard'] },
+  lizard: { name: 'Lizard', defeats: ['Paper', 'Spock'] },
+  spock: { name: 'Spock', defeats: ['Scissors', 'Rock'] },
 };
 
 
 let computerSelectedItem ='';
+
+let playerScoreNum = 0 ;
+let computerScoreNum = 0;
+
+
+function resetAll()
+{
+  playerScoreNum=0;
+  computerScoreNum=0;
+  resultText.textContent = '';
+  computerScore.textContent = computerScoreNum;
+  playerScore.textContent = playerScoreNum;
+  playerChoice.textContent ='';
+  computerChoiceText.textContent = '';
+  computerSelections.forEach((item,i)=>{
+    computerSelections[i].classList.remove('computer-selected');
+  });
+  playerSelection.forEach((item,i)=>{
+    playerSelection[i].classList.remove('player-selected');
+  });
+
+}
 
 function computerChoice()
 {
@@ -41,9 +62,41 @@ function computerChoice()
 
 }
 
-function checkResult()
+
+
+function updateScore(pChoice)
+{
+  if(pChoice === computerSelectedItem)
+  {
+    resultText.textContent = "Oops, It's a Tie";
+    resultText.style.color = 'brown';
+  }
+  else
+  {
+    const choicesCheck = choices[pChoice.toLowerCase()];
+
+    if(choicesCheck.defeats.indexOf(computerSelectedItem) === -1)
+    {
+      resultText.textContent = "You Lost!";
+      resultText.style.color = 'red';
+      computerScoreNum++;
+      computerScore.textContent = computerScoreNum;
+
+    }
+    else
+    {
+      resultText.textContent = "Hurrah, You Win!";
+      resultText.style.color = 'green';
+      playerScoreNum++;
+      playerScore.textContent = playerScoreNum;
+    }
+  }
+}
+
+function checkResult(pChoice)
 {
   computerChoice()
+  updateScore(pChoice)
 }
 
 function select(choice)
@@ -62,6 +115,7 @@ function select(choice)
     }
   })
 
-  checkResult()
+  checkResult(choice)
 }
 
+resetAll()
